@@ -1,0 +1,48 @@
+```
+package com.logistics.servlet;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.logitics.sql.Dao;
+import com.logitics.sql.DaoImple;
+
+@WebServlet("/UpdateStuff")
+public class UpdateStuff extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    public UpdateStuff() {
+        super();
+    }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String state = request.getParameter("state");
+		String no = request.getParameter("no");
+		if(state.equals("on")){
+			state="out";
+		}else if(state.equals("out")){
+			state="on";
+		}
+//		System.out.println(no+state);
+		if(!state.equals("")&&state!=null&&!no.equals("")&&no!=null){
+			Dao dao = new DaoImple();
+			dao.updateStuff(no, state);
+			response.sendRedirect("cooperation.html");
+		}else{
+			out.print(0);
+		}
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request,response);
+	}
+
+}
+
+```
